@@ -1,27 +1,10 @@
-var verifica;
+var verifica = false;
 
 function cadastro(){
 
     var form = document.getElementById("formulario");
 
     if(validaCampos()){
-        /*axios.post('http://localhost:8181/usuarios',{
-            nome: `${form[0].value}`,
-            email: `${form[1].value}`,
-            sexo: `${form[2].value}`,
-            endereco: `${form[3].value}`,
-            telefone: `${form[4].value}`,
-            data_nascimento: `${form[5].value}`,
-            cpf: `${form[6].value}`
-        })
-        .then(function(response){
-            verifica = true;
-            console.log(response);
-        })
-        .catch(function(error){
-            verifica = false;
-            console.log(error);
-        });*/
 
         var form = document.querySelector("#formulario");
         var xhr = new XMLHttpRequest();
@@ -32,7 +15,7 @@ function cadastro(){
             sexo: `${form[2].value}`,
             endereco: `${form[3].value}`,
             telefone: `${form[4].value}`,
-            data_nascimento: `${form[5].value}`,
+            dataNasc: `${form[5].value}`,
             cpf: `${form[6].value}`
         }
 
@@ -42,7 +25,7 @@ function cadastro(){
 
         xhr.open("POST", "http://localhost:8181/usuarios");
         //setRequestHeader('Content-Type', 'application/json');
-
+        xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.addEventListener("load", function() {
             if (xhr.status == 200) {
                 verifica = true;
@@ -54,13 +37,14 @@ function cadastro(){
         });
 
         xhr.send(dados);
-    }
 
-    if(verifica){
+    }
+    if(xhr.status == 200){
         alert('Usuario Cadastrado com sucesso!');
     }else{
         alert('Erro ao cadastrar usuario!');
     }
+    
 }
 
 function validaCampos(){
